@@ -16,10 +16,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuración de conexión a SQL Azure
 const dbConfig = {
-    user: 'TimeData1',
+    user: 'TimeData',
     password: '1Key080603',
-    server: 'timedataserver.database.windows.net', 
-    database: 'TimeDataServer',
+    server: 'timedata1.database.windows.net', 
+    database: 'TimeData',
     options: {
         encrypt: true, // Utilizado para SQL Azure
         trustServerCertificate: false
