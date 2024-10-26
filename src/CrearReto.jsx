@@ -17,7 +17,7 @@ const CrearReto = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:3000/crear-reto', {
+            const response = await fetch('https://timedata-ruddy.vercel.app/crear-reto', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
