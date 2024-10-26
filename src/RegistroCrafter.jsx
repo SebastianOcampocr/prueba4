@@ -19,7 +19,7 @@ const Registrocrafter = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:3000/register', {
+            const response = await fetch('https://timedata-ruddy.vercel.app/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const Registrocrafter = () => {
             console.log(data);
 
             // Iniciar sesión automáticamente
-            const loginResponse = await fetch('http://localhost:3000/login', {
+            const loginResponse = await fetch('https://timedata-ruddy.vercel.app/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
