@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      { "src": "/register", "dest": "/server.js" },
+      { "src": "/login", "dest": "/server.js" },
+      { "src": "/crear-reto", "dest": "/server.js" },
+      { "src": "/retos", "dest": "/server.js" },
+      { "src": "/retos/:id", "dest": "/server.js" }
+    ]
+  }
+  
