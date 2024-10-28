@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000; // Cambiado aquí
 
 // Middleware
 app.use(cors({
-    origin: 'https://timedata-ruddy.vercel.app/', 
+    origin: 'https://timedata-ruddy.vercel.app', 
     methods: ['GET', 'POST', 'PUT', 'DELETE' ],
 }));
 
