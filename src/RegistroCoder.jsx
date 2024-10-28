@@ -37,7 +37,7 @@ const Registrocoder = () => {
                     throw new Error(errorData.message || 'Error en el registro');
                 }
 
-                const data = await response.json();
+                const data = JSON.parse(responseText);
                 console.log(data); // Aquí puedes manejar la respuesta
 
                 // Iniciar sesión automáticamente
