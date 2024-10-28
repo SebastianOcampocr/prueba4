@@ -71,9 +71,9 @@ connectDB().then(() => createTables());
 
 // Ruta para registrar usuarios
 app.post('/register', async (req, res) => {
+    console.log("Solicitud de registro recibida:", req.body); // Verifica que recibas la solicitud correctamente
     const { username, password, accountType, phone } = req.body;
 
-    // Validar campos
     if (!username || !password || !accountType || !phone) {
         return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
     }
@@ -87,38 +87,37 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         await sql.query`INSERT INTO users (username, password, accountType, phone) VALUES (${username}, ${hashedPassword}, ${accountType}, ${phone})`;
 
-        const newUser = await sql.query`SELECT * FROM users WHERE phone = ${phone}`;
-        res.status(201).json({
-            message: 'Usuario registrado e iniciado sesión exitosamente.',
-            user: { username: newUser.recordset[0].username, accountType: newUser.recordset[0].accountType, phone: newUser.recordset[0].phone }
-        });
+        res.status(201).json({ message: 'Usuario registrado exitosamente.' });
     } catch (err) {
+        console.error('Error al registrar el usuario:', err); // Para depuración
         return res.status(500).json({ error: err.message });
     }
 });
 
 // Ruta para iniciar sesión
 app.post('/login', async (req, res) => {
+    console.log("Solicitud de inicio de sesión recibida:", req.body); // Verifica que recibas la solicitud correctamente
     const { phone, password } = req.body;
+
+    if (!phone || !password) {
+        return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
+    }
 
     try {
         const result = await sql.query`SELECT * FROM users WHERE phone = ${phone}`;
+        if (result.recordset.length === 0) {
+            return res.status(401).json({ message: 'Número de teléfono o contraseña incorrectos.' });
+        }
+
         const user = result.recordset[0];
-
-        if (!user) {
-            return res.status(401).json({ message: 'Credenciales incorrectas' });
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Número de teléfono o contraseña incorrectos.' });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Credenciales incorrectas' });
-        }
-
-        res.status(200).json({
-            message: 'Inicio de sesión exitoso',
-            user: { username: user.username, accountType: user.accountType, phone: user.phone }
-        });
+        res.status(200).json({ message: 'Inicio de sesión exitoso.', user });
     } catch (err) {
+        console.error('Error al iniciar sesión:', err); // Para depuración
         return res.status(500).json({ error: err.message });
     }
 });
