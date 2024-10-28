@@ -56,7 +56,8 @@ async function createTables() {
             CREATE TABLE retos (
                 id INT PRIMARY KEY IDENTITY(1,1),
                 titulo NVARCHAR(255) NOT NULL,
-                descripcion NVARCHAR(255) NOT NULL
+                descripcion NVARCHAR(255) NOT NULL,
+                lenguaje NVARCHAR(50) NOT NULL  
             );
         `);
         console.log('Tabla de retos creada o ya existe.');
@@ -124,26 +125,26 @@ app.post('/login', async (req, res) => {
 
 // Ruta para crear un reto y notificar a través de Twilio
 app.post('/crear-reto', async (req, res) => {
-    const { titulo, descripcion } = req.body;
+    const { titulo, descripcion, lenguaje } = req.body; // Agregado lenguaje aquí
 
-    // Validar que los campos de título y descripción estén presentes
-    if (!titulo || !descripcion) {
+    // Validar que los campos de título, descripción y lenguaje estén presentes
+    if (!titulo || !descripcion || !lenguaje) {
         return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
     }
 
     try {
-        await sql.query`INSERT INTO retos (titulo, descripcion) VALUES (${titulo}, ${descripcion})`;
+        await sql.query`INSERT INTO retos (titulo, descripcion, lenguaje) VALUES (${titulo}, ${descripcion}, ${lenguaje})`; // Agregado lenguaje aquí
 
         // Configuración de Twilio
-        const accountSid = 'AC2ae68485f155dcc09dcfcdb9a8bec8c3'; // Reemplaza con tu SID de cuenta de Twilio
-        const authToken = 'edf324a2b9ce2f5bd64f2ed30d0bbdb2'; // Reemplaza con tu token de autenticación
+        const accountSid = 'AC2ae68485f155dcc09dcfcdb9a8bec8c3';
+        const authToken = 'edf324a2b9ce2f5bd64f2ed30d0bbdb2';
         const client = twilio(accountSid, authToken);
 
         // Enviar el mensaje a un número fijo
         client.messages.create({
-            body: `It's time to program! Se ha creado un nuevo reto en TimeData`,
-            from: '+17633163890', // Tu número de Twilio
-            to: '+50671020174', // Número de teléfono
+            body: `¡Es hora de programar! Se ha creado un nuevo reto en TimeData: ${titulo}, Lenguaje: ${lenguaje}`, // Incluye el lenguaje aquí
+            from: '+17633163890',
+            to: '+50671020174',
         })
         .then(message => {
             console.log(`Mensaje enviado: ${message.sid}`);
@@ -157,6 +158,28 @@ app.post('/crear-reto', async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 });
+
+// Ruta para obtener todos los retos
+app.get('/retos', async (req, res) => {
+    try {
+        const result = await sql.query`SELECT * FROM retos`;
+        res.status(200).json(result.recordset);
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/retos/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await sql.query`DELETE FROM retos WHERE id = ${id}`;
+        res.status(200).json({ message: 'Reto eliminado exitosamente.' });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
+
 
 // Iniciar el servidor
 app.listen(port, () => {
