@@ -31,7 +31,7 @@ const Registrocoder = () => {
                         phone: numeroCelular, // Asegúrate de enviar el número de celular aquí
                     }),
                 });
-                
+                const responseText = await response.text();
                 if (!response.ok) {
                     const errorData = await response.json(); // Obtener el mensaje de error del servidor
                     throw new Error(errorData.message || 'Error en el registro');
