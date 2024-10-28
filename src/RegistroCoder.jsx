@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './RegistroCoder.css';
 import muneno1 from './templates/muñeco1.png';
-const apiUrl = 'http://timedata-ruddy.vercel.app';
 const Registrocoder = () => {
     const [numeroCelular, setNumeroCelular] = useState('');
     const [nombreCompleto, setNombreCompleto] = useState('');
@@ -19,7 +18,7 @@ const Registrocoder = () => {
             setError('');
             // Intentar registrarse
             try {
-                const response = await fetch('${apiUrl}/register', {
+                const response = await fetch('http://timedata-ruddy.vercel.app/register', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
