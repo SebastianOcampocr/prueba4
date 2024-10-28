@@ -18,7 +18,7 @@ const Registrocoder = () => {
             setError('');
             // Intentar registrarse
             try {
-                const response = await fetch('http://timedata-ruddy.vercel.app/register', {
+                const response = await fetch('https://timedata-ruddy.vercel.app/register', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
