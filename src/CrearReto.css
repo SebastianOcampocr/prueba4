@@ -1,3 +1,4 @@
+/* Estilos generales */
 .crear-reto {
     display: flex;
     flex-direction: column;
@@ -6,7 +7,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 400px;
+    max-width: 1600px; /* Aumentado el ancho máximo */
     margin: 30px auto; /* Centrado en la página */
 }
 
@@ -16,7 +17,8 @@ h2 {
 }
 
 .input-field,
-.textarea-field {
+.textarea-field,
+.select-field {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -26,7 +28,8 @@ h2 {
 }
 
 .input-field:focus,
-.textarea-field:focus {
+.textarea-field:focus,
+.select-field:focus {
     border-color: #007bff; /* Color del borde al enfocar */
     outline: none;
 }
@@ -56,17 +59,6 @@ h2 {
     margin-bottom: 15px;
 }
 
-.select-field {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
+/* Estilos específicos para el Chatbot */
 
-.select-field:focus {
-    border-color: #007bff; /* Color del borde al enfocar */
-    outline: none;
-}
 
