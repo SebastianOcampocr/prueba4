@@ -10,7 +10,11 @@ const app = express();
 const port = process.env.PORT || 3000; // Cambiado aquí
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: 'https://timedata-ruddy.vercel.app/', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
