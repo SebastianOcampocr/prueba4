@@ -19,18 +19,18 @@ const Registrocoder = () => {
             setError('');
             // Intentar registrarse
             try {
-                const response = await fetch('/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username: nombreCompleto,
-                        password: contrasena,
-                        accountType: 'Coder', // Agregar el tipo de cuenta
-                        phone: numeroCelular, // Asegúrate de enviar el número de celular aquí
-                    }),
-                });
+                const response = await fetch('https://timedata-ruddy.vercel.app/register', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        username: nombreCompleto,
+        password: contrasena,
+        accountType: 'Coder',
+        phone: numeroCelular,
+    }),
+});
                 
                 if (!response.ok) {
                     const errorData = await response.json(); // Obtener el mensaje de error del servidor
