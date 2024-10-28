@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate, Navigate } from 'react-router-dom'; 
+import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import RetosCreados from './Retos.jsx';
 import Donaciones from './Donaciones.jsx';
 import IniciarSesion from './IniciarSesion.jsx';
