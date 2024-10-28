@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate, Navigate } from 'react-router-dom'; 
-import Chatbot from './Chatbot';
+import RetosCreados from './Retos.jsx';
 import Donaciones from './Donaciones.jsx';
 import IniciarSesion from './IniciarSesion.jsx';
 import SubirReto from './SubirReto';
 import Cuenta from './cuenta.jsx'; 
-import CrearReto from './CrearReto.jsx'; // Importa el componente CrearReto
+import CrearReto from './CrearReto.jsx'; 
 import reacnative from './templates/Reactnativefoto.png';
 import RegistroCoder from './RegistroCoder.jsx';
 import java from './templates/javafoto.png';
@@ -18,6 +18,7 @@ import inicio from './templates/logofoto.png';
 import './App.css';
 import UserMenu from './UserMenu'; 
 import RegistroCrafter from './RegistroCrafter';
+import ChatBot from './Chatbot.jsx'; // Importa el ChatBot
 
 function App() {
   return (
@@ -31,11 +32,11 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  const [profilePicture, setProfilePicture] = useState(''); // Estado para la foto de perfil
+  const [profilePicture, setProfilePicture] = useState(''); 
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
-    const storedProfilePicture = localStorage.getItem('profilePicture'); // Cargar foto de perfil
+    const storedProfilePicture = localStorage.getItem('profilePicture'); 
     if (storedUsername) {
       setUsername(storedUsername);
     }
@@ -53,15 +54,14 @@ function AppContent() {
 
   function logout() {
     localStorage.removeItem('username');
-    localStorage.removeItem('profilePicture'); // Eliminar foto de perfil al cerrar sesión
+    localStorage.removeItem('profilePicture'); 
     setUsername('');
-    setProfilePicture(''); // Limpiar el estado de la foto de perfil
+    setProfilePicture(''); 
     navigate('/');
   }
 
-  // Función para manejar la redirección al crear reto
   const handleCreateChallenge = () => {
-    navigate('/crearreto'); // Redirige a CrearReto
+    navigate('/crearreto'); 
   };
 
   return (
@@ -78,7 +78,7 @@ function AppContent() {
               <li className="nav-item"><Link to="/donaciones">Donaciones</Link></li>
               <li className="nav-item"><Link to="/sobre-nosotros">Sobre nosotros</Link></li>
               <li className="nav-item"><Link to="/comentarios">Comentarios</Link></li>
-              <li className="nav-item"><Link to="/chatbot">Chat bot</Link></li>
+              <li className="nav-item"><Link to="/retoscreados">Retos Creados</Link></li>
               <li className="nav-item"><Link to="/subirreto">Subir reto</Link></li>
               {!username && (
                 <li className="nav-item"><Link to="/iniciarsecion">Iniciar sesión</Link></li>
@@ -94,14 +94,17 @@ function AppContent() {
         <Route path="/" element={<HomePage username={username} />} />
         <Route path="/donaciones" element={<Donaciones />} />
         <Route path="/comentarios" element={<HomePage username={username} />} />
-        <Route path="/chatbot" element={<Chatbot />} />
+        <Route path="/retoscreados" element={<RetosCreados />} />
         <Route path="/subirreto" element={<SubirReto />} />
         <Route path="/iniciarsecion" element={<IniciarSesion />} />
         <Route path="/RegistroCoder" element={<RegistroCoder />} />
         <Route path="/RegistroCrafter" element={<RegistroCrafter />} /> 
-        <Route path="/crearreto" element={<CrearReto />} /> {/* Ruta para CrearReto */}
+        <Route path="/crearreto" element={<CrearReto />} />
         <Route path="/cuenta" element={username ? <Cuenta username={username} profilePicture={profilePicture} /> : <Navigate to="/" />} />
       </Routes>
+
+      {/* Agrega el ChatBot aquí para que se muestre en todas las páginas */}
+      <ChatBot />
     </div>
   );
 }
