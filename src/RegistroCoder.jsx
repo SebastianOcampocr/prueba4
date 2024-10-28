@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './RegistroCoder.css';
 import muneno1 from './templates/muñeco1.png';
-
+const apiUrl = 'https://timedata-ruddy.vercel.app';
 const Registrocoder = () => {
     const [numeroCelular, setNumeroCelular] = useState('');
     const [nombreCompleto, setNombreCompleto] = useState('');
